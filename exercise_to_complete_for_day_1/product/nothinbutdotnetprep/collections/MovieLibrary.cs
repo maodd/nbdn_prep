@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using nothinbutdotnetprep.infrastructure;
 
@@ -109,40 +110,22 @@ namespace nothinbutdotnetprep.collections
 
         public IEnumerable<Movie> all_movies_published_after(int year)
         {
-            foreach (var movie in movies)
-            {
-                if (movie.date_published.Year > year)
-                    yield return movie;
-            }
+        	return all_matching(movie => movie.date_published.Year > year);
         }
 
         public IEnumerable<Movie> all_movies_published_between_years(int startingYear, int endingYear)
         {
-            IList<Movie> betweenMovies = new List<Movie>();
-            foreach (var movie in movies)
-            {
-                if (movie.date_published.Year >= startingYear && movie.date_published.Year <= endingYear)
-                    betweenMovies.Add(movie);
-            }
-            return betweenMovies;
+        	return all_matching(movie => movie.date_published.Year >= startingYear && movie.date_published.Year <= endingYear);
         }
 
         public IEnumerable<Movie> all_kid_movies()
         {
-            foreach (var movie in movies)
-            {
-                if (movie.genre.Equals(Genre.kids))
-                    yield return movie;
-            }
+        	return all_matching(movie => movie.genre.Equals(Genre.kids));
         }
 
         public IEnumerable<Movie> all_action_movies()
         {
-            foreach (var movie in movies)
-            {
-                if (movie.genre.Equals(Genre.action))
-                    yield return movie;
-            }
+					return all_matching(movie => movie.genre.Equals(Genre.action));
         }
 
         class DatePublishedComparer : IComparer<Movie>

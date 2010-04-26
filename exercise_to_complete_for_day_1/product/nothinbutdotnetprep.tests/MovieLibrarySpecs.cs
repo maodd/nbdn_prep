@@ -217,13 +217,6 @@ namespace nothinbutdotnetprep.tests
                 results.should_only_contain(cars, a_bugs_life);
             };
 
-            it should_be_able_to_play_with_delegates = () =>
-            {
-                criteria(a_bugs_life).should_be_true();
-                    
-
-
-            };
             it should_be_able_to_find_all_movies_published_by_pixar_or_disney = () =>
             {
                 var results = sut.all_movies_published_by_pixar_or_disney();
