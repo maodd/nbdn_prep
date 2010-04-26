@@ -53,7 +53,7 @@ namespace nothinbutdotnetprep.tests
     {
         public abstract class concern : observations_for_a_sut_without_a_contract<MovieLibrary>
         {
-            static protected IList<Movie> movie_collection;
+            protected static IList<Movie> movie_collection;
 
             context c = () =>
             {
@@ -217,6 +217,13 @@ namespace nothinbutdotnetprep.tests
                 results.should_only_contain(cars, a_bugs_life);
             };
 
+            it should_be_able_to_play_with_delegates = () =>
+            {
+                criteria(a_bugs_life).should_be_true();
+                    
+
+
+            };
             it should_be_able_to_find_all_movies_published_by_pixar_or_disney = () =>
             {
                 var results = sut.all_movies_published_by_pixar_or_disney();
@@ -272,7 +279,8 @@ namespace nothinbutdotnetprep.tests
             {
                 var results = sut.sort_all_movies_by_title_descending();
 
-                results.should_only_contain_in_order(theres_something_about_mary, the_ring, shrek, pirates_of_the_carribean, indiana_jones_and_the_temple_of_doom,
+                results.should_only_contain_in_order(theres_something_about_mary, the_ring, shrek, pirates_of_the_carribean,
+                                                     indiana_jones_and_the_temple_of_doom,
                                                      cars, a_bugs_life);
             };
 
@@ -280,21 +288,24 @@ namespace nothinbutdotnetprep.tests
             {
                 var results = sut.sort_all_movies_by_title_ascending();
 
-                results.should_only_contain_in_order(a_bugs_life, cars, indiana_jones_and_the_temple_of_doom, pirates_of_the_carribean, shrek, the_ring, theres_something_about_mary);
+                results.should_only_contain_in_order(a_bugs_life, cars, indiana_jones_and_the_temple_of_doom, pirates_of_the_carribean, shrek, the_ring,
+                                                     theres_something_about_mary);
             };
 
             it should_be_able_to_sort_all_movies_by_date_published_descending = () =>
             {
                 var results = sut.sort_all_movies_by_date_published_descending();
 
-                results.should_only_contain_in_order(theres_something_about_mary, shrek, the_ring, cars, pirates_of_the_carribean, a_bugs_life, indiana_jones_and_the_temple_of_doom);
+                results.should_only_contain_in_order(theres_something_about_mary, shrek, the_ring, cars, pirates_of_the_carribean, a_bugs_life,
+                                                     indiana_jones_and_the_temple_of_doom);
             };
 
             it should_be_able_to_sort_all_movies_by_date_published_ascending = () =>
             {
                 var results = sut.sort_all_movies_by_date_published_ascending();
 
-                results.should_only_contain_in_order(indiana_jones_and_the_temple_of_doom, a_bugs_life, pirates_of_the_carribean, cars, the_ring, shrek, theres_something_about_mary);
+                results.should_only_contain_in_order(indiana_jones_and_the_temple_of_doom, a_bugs_life, pirates_of_the_carribean, cars, the_ring, shrek,
+                                                     theres_something_about_mary);
             };
 
             it should_be_able_to_sort_all_movies_by_studio_rating_and_year_published = () =>
@@ -319,13 +330,13 @@ namespace nothinbutdotnetprep.tests
 
         public abstract class searching_and_sorting_concerns_for_movie_library : concern
         {
-            static protected Movie a_bugs_life;
-            static protected Movie cars;
-            static protected Movie indiana_jones_and_the_temple_of_doom;
-            static protected Movie pirates_of_the_carribean;
-            static protected Movie shrek;
-            static protected Movie the_ring;
-            static protected Movie theres_something_about_mary;
+            protected static Movie a_bugs_life;
+            protected static Movie cars;
+            protected static Movie indiana_jones_and_the_temple_of_doom;
+            protected static Movie pirates_of_the_carribean;
+            protected static Movie shrek;
+            protected static Movie the_ring;
+            protected static Movie theres_something_about_mary;
 
 
             context c = () =>
