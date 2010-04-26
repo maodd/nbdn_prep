@@ -5,6 +5,8 @@ using developwithpassion.bdd.contexts;
 using developwithpassion.bdd.harnesses.mbunit;
 using developwithpassion.bdddoc.core;
 using nothinbutdotnetprep.collections;
+using nothinbutdotnetprep.infrastructure;
+using nothinbutdotnetprep.infrastructure.searching;
 using nothinbutdotnetprep.tests.utility;
 
 /* The following set of Contexts (TestFixture) are in place to specify the functionality that you need to complete for the MovieLibrary class.
@@ -176,6 +178,7 @@ namespace nothinbutdotnetprep.tests
             {
                 movie_collection.Count.should_be_equal_to(1);
             };
+
         }
 
         [Concern(typeof (MovieLibrary))]
@@ -200,6 +203,8 @@ namespace nothinbutdotnetprep.tests
             {
                 movie_collection.Count.should_be_equal_to(1);
             };
+
+
         }
 
         [Concern(typeof (MovieLibrary))]
@@ -212,49 +217,52 @@ namespace nothinbutdotnetprep.tests
 
             it should_be_able_to_find_all_movies_published_by_pixar = () =>
             {
-                var results = sut.all_movies_published_by_pixar();
+                var results = sut.all_movies().all_matching(Where<Movie>.has_a(x => x.production_studio).equal_to(ProductionStudio.Pixar));
 
                 results.should_only_contain(cars, a_bugs_life);
             };
 
             it should_be_able_to_find_all_movies_published_by_pixar_or_disney = () =>
             {
-                var results = sut.all_movies_published_by_pixar_or_disney();
+                var results = sut.all_movies().all_matching(Where<Movie>.has_a(x => x.production_studio).equal_to_any(ProductionStudio.Pixar, ProductionStudio.Disney));
 
                 results.should_only_contain(a_bugs_life, pirates_of_the_carribean, cars);
             };
 
             it should_be_able_to_find_all_movies_not_published_by_pixar = () =>
             {
-                var results = sut.all_movies_not_published_by_pixar();
+                var results = sut.all_movies().all_matching(Where<Movie>.has_a(x => x.production_studio).not_equal_to(ProductionStudio.Pixar));
 
                 results.should_not_contain(cars, a_bugs_life);
             };
 
             it should_be_able_to_find_all_movies_published_after_a_certain_year = () =>
             {
-                var results = sut.all_movies_published_after(2004);
+                var results = sut.all_movies().all_matching(new AnonymousCriteria<Movie>(movie => movie.date_published.Year > 2004));
 
                 results.should_only_contain(the_ring, shrek, theres_something_about_mary);
             };
 
             it should_be_able_to_find_all_movies_published_between_a_certain_range_of_years = () =>
             {
-                var results = sut.all_movies_published_between_years(1982, 2003);
+                var results = sut.all_movies().all_matching(new AnonymousCriteria<Movie>(movie => movie.date_published.Year >= 1982 &&
+                    movie.date_published.Year <=2003));
 
                 results.should_only_contain(indiana_jones_and_the_temple_of_doom, a_bugs_life, pirates_of_the_carribean);
             };
 
             it should_be_able_to_find_all_kid_movies = () =>
             {
-                var results = sut.all_kid_movies();
+                var results =
+                    sut.all_movies().all_matching(Where<Movie>.has_a(x => x.genre).equal_to(Genre.kids));
 
                 results.should_only_contain(a_bugs_life, shrek, cars);
             };
 
             it should_be_able_to_find_all_action_movies = () =>
             {
-                var results = sut.all_action_movies();
+                var results =
+                    sut.all_movies().all_matching(Where<Movie>.has_a(x => x.genre).equal_to(Genre.action));
 
                 results.should_only_contain(indiana_jones_and_the_temple_of_doom, pirates_of_the_carribean);
             };

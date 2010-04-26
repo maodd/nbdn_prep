@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using nothinbutdotnetprep.infrastructure;
 
@@ -42,41 +41,6 @@ namespace nothinbutdotnetprep.collections
             }
         }
 
-        public IEnumerable<Movie> sort_all_movies_by_title_descending()
-        {
-            var sortedMovies = new List<Movie>(movies);
-            sortedMovies.Sort(new TitleComparer(false));
-            return sortedMovies;
-        }
-
-        public IEnumerable<Movie> all_movies_published_by_pixar()
-        {
-            foreach (var movie in movies)
-            {
-                if (movie.production_studio.Equals(ProductionStudio.Pixar))
-                {
-                    yield return movie;
-                }
-            }
-        }
-
-        public IEnumerable<Movie> all_movies_published_by_pixar_or_disney()
-        {
-            foreach (var movie in movies)
-            {
-                if (movie.production_studio.Equals(ProductionStudio.Pixar) ||
-                    movie.production_studio.Equals(ProductionStudio.Disney))
-                    yield return movie;
-            }
-        }
-
-        public IEnumerable<Movie> sort_all_movies_by_title_ascending()
-        {
-            var sortedMovies = new List<Movie>(movies);
-            sortedMovies.Sort(new TitleComparer(true));
-            return sortedMovies;
-        }
-
         class StudioRatingAndYearComparer : IComparer<Movie>
         {
             public int Compare(Movie x, Movie y)
@@ -94,38 +58,31 @@ namespace nothinbutdotnetprep.collections
             return sortedMovies;
         }
 
-
-        private IEnumerable<Movie> all_matching(MovieCriteria criteria)
+        public IEnumerable<Movie> sort_all_movies_by_title_ascending()
         {
-            foreach (var movie in movies)
+            var sortedMovies = new List<Movie>(movies);
+            sortedMovies.Sort(new TitleComparer(true));
+            return sortedMovies;
+        }
+
+
+        public delegate bool MovieMatcher(Movie movie);
+
+        static bool is_a_kids_movie(Movie movie)
+        {
+            return movie.production_studio == ProductionStudio.Pixar;
+        }
+
+        public class SomeClass
+        {
+            public bool is_cool(Movie movie)
             {
-                if (criteria(movie)) yield return movie;
+                throw new NotImplementedException();
             }
         }
-
-        public IEnumerable<Movie> all_movies_not_published_by_pixar()
+        static bool is_a_pixar_movie(Movie movie)
         {
-            return all_matching(movie => movie.production_studio != ProductionStudio.Pixar);
-        }
-
-        public IEnumerable<Movie> all_movies_published_after(int year)
-        {
-        	return all_matching(movie => movie.date_published.Year > year);
-        }
-
-        public IEnumerable<Movie> all_movies_published_between_years(int startingYear, int endingYear)
-        {
-        	return all_matching(movie => movie.date_published.Year >= startingYear && movie.date_published.Year <= endingYear);
-        }
-
-        public IEnumerable<Movie> all_kid_movies()
-        {
-        	return all_matching(movie => movie.genre.Equals(Genre.kids));
-        }
-
-        public IEnumerable<Movie> all_action_movies()
-        {
-					return all_matching(movie => movie.genre.Equals(Genre.action));
+            return movie.production_studio == ProductionStudio.Pixar;
         }
 
         class DatePublishedComparer : IComparer<Movie>
@@ -156,6 +113,13 @@ namespace nothinbutdotnetprep.collections
         {
             var sortedMovies = new List<Movie>(movies);
             sortedMovies.Sort(new DatePublishedComparer(true));
+            return sortedMovies;
+        }
+
+        public IEnumerable<Movie> sort_all_movies_by_title_descending()
+        {
+            var sortedMovies = new List<Movie>(movies);
+            sortedMovies.Sort(new TitleComparer(false));
             return sortedMovies;
         }
     }
