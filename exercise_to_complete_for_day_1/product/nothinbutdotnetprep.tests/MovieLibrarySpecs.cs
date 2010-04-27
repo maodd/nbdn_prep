@@ -6,6 +6,7 @@ using developwithpassion.bdd.harnesses.mbunit;
 using developwithpassion.bdddoc.core;
 using nothinbutdotnetprep.collections;
 using nothinbutdotnetprep.infrastructure;
+using nothinbutdotnetprep.infrastructure.ranges;
 using nothinbutdotnetprep.infrastructure.searching;
 using nothinbutdotnetprep.tests.utility;
 
@@ -217,6 +218,9 @@ namespace nothinbutdotnetprep.tests
 
             it should_be_able_to_find_all_movies_published_by_pixar = () =>
             {
+                new InclusiveRange<int>(23,44)
+                    .contains(34);
+
                 var results = sut.all_movies().all_matching(Where<Movie>.has_a(x => x.production_studio).equal_to(ProductionStudio.Pixar));
 
                 results.should_only_contain(cars, a_bugs_life);
@@ -231,7 +235,8 @@ namespace nothinbutdotnetprep.tests
 
             it should_be_able_to_find_all_movies_not_published_by_pixar = () =>
             {
-                var results = sut.all_movies().all_matching(Where<Movie>.has_a(x => x.production_studio).not_equal_to(ProductionStudio.Pixar));
+                var results = sut.all_movies().all_matching(Where<Movie>.has_a(x => x.production_studio).not.equal_to_any(ProductionStudio.Pixar));
+
 
                 results.should_not_contain(cars, a_bugs_life);
             };
