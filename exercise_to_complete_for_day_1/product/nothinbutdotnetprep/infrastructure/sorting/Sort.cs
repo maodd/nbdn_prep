@@ -1,25 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 
 namespace nothinbutdotnetprep.infrastructure.sorting
 {
-	public class Sort<ItemToSearch>
-	{
-		public static IComparer<ItemToSearch> by<PropertyType>(Func<ItemToSearch, PropertyType> accessor)
-			where PropertyType : IComparable<PropertyType>
-		{
-			return new AscendingSortFactory<ItemToSearch, PropertyType>(accessor);
-		}
+    public class Sort<ItemToSort>
+    {
+        public static ComparerBuilder<ItemToSort> by<PropertyToSortOn>(Func<ItemToSort, PropertyToSortOn> accessor,
+            params PropertyToSortOn[] values) 
+        {
+            return new ComparerBuilder<ItemToSort>(new PropertyComparer<ItemToSort, PropertyToSortOn>(
+                                                       new FixedComparer<PropertyToSortOn>(values), accessor));
+        }
+        public static ComparerBuilder<ItemToSort> by<PropertyToSortOn>(Func<ItemToSort, PropertyToSortOn> accessor) where PropertyToSortOn : IComparable<PropertyToSortOn>
+        {
+            return new ComparerBuilder<ItemToSort>(new PropertyComparer<ItemToSort, PropertyToSortOn>(
+                new ComparableComparer<PropertyToSortOn>(),accessor));
+        }
 
-		public static IComparer<ItemToSearch> by<PropertyType>(Func<ItemToSearch, PropertyType> accessor, params PropertyType[] order)
-		{
-			return new DefinedOrderSortFactory<ItemToSearch, PropertyType>(accessor, order);
-		}
-
-		public static IComparer<ItemToSearch> by_descending<PropertyType>(Func<ItemToSearch, PropertyType> accessor)
-			where PropertyType : IComparable<PropertyType>
-		{
-			return new DescendingSortFactory<ItemToSearch, PropertyType>(accessor);
-		}
-	}
+        public static ComparerBuilder<ItemToSort> by_descending<PropertyToSortOn>(Func<ItemToSort, PropertyToSortOn> accessor) where PropertyToSortOn : IComparable<PropertyToSortOn>
+        {
+            return new ComparerBuilder<ItemToSort>(new ReverseComparer<ItemToSort>(new ComparableComparer<ItemToSort, PropertyToSortOn>(accessor)));
+        }
+    }
 }

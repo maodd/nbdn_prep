@@ -29,5 +29,13 @@ namespace nothinbutdotnetprep.infrastructure
                 if (criteria(item)) yield return item;
             }
         }
+
+        public static IEnumerable<T> sorted_using<T>(this IEnumerable<T> items,
+                                                     IComparer<T> comparer)
+        {
+            var sorted = new List<T> (items);
+            sorted.Sort(comparer);
+            return sorted;
+        }
     }
 }
