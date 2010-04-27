@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using nothinbutdotnetprep.infrastructure;
 
@@ -73,13 +72,6 @@ namespace nothinbutdotnetprep.collections
             return movie.production_studio == ProductionStudio.Pixar;
         }
 
-        public class SomeClass
-        {
-            public bool is_cool(Movie movie)
-            {
-                throw new NotImplementedException();
-            }
-        }
         static bool is_a_pixar_movie(Movie movie)
         {
             return movie.production_studio == ProductionStudio.Pixar;
