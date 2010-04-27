@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using nothinbutdotnetprep.infrastructure.searching;
+using nothinbutdotnetprep.infrastructure.sorting;
 
 namespace nothinbutdotnetprep.infrastructure
 {
@@ -29,5 +30,28 @@ namespace nothinbutdotnetprep.infrastructure
                 if (criteria(item)) yield return item;
             }
         }
+
+        public static IEnumerable<T> sorted_using<T>(this IEnumerable<T> items,
+                                                     IComparer<T> comparer)
+        {
+            var sorted = new List<T> (items);
+            sorted.Sort(comparer);
+            return sorted;
+        }
+
+		public static IEnumerable<ItemToSort> order_by<ItemToSort, PropertyToSortOn>(this IEnumerable<ItemToSort> items, Func<ItemToSort, PropertyToSortOn> accessor) where PropertyToSortOn : IComparable<PropertyToSortOn>
+		{
+			return new OrderedList<ItemToSort>(items, Sort<ItemToSort>.by(accessor));
+		}
+
+		public static IEnumerable<ItemToSort> order_by<ItemToSort, PropertyToSortOn>(this IEnumerable<ItemToSort> items, Func<ItemToSort, PropertyToSortOn> accessor, params PropertyToSortOn[] order)
+		{
+			return new OrderedList<ItemToSort>(items, Sort<ItemToSort>.by(accessor, order));
+		}
+
+		public static IEnumerable<ItemToSort> then_by<ItemToSort, PropertyToSortOn>(this IEnumerable<ItemToSort> items, Func<ItemToSort, PropertyToSortOn> accessor) where PropertyToSortOn : IComparable<PropertyToSortOn>
+		{
+			return order_by(items, accessor);
+		}
     }
 }

@@ -64,11 +64,14 @@
     <Compile Include="infrastructure\searching\OrCriteria.cs" />
     <Compile Include="infrastructure\searching\PropertyCriteria.cs" />
     <Compile Include="infrastructure\searching\Where.cs" />
-    <Compile Include="infrastructure\sorting\AscendingSortFactory.cs" />
-    <Compile Include="infrastructure\sorting\DefinedOrderSortFactory.cs" />
-    <Compile Include="infrastructure\sorting\DescendingSortFactory.cs" />
+    <Compile Include="infrastructure\sorting\ChainedComparer.cs" />
+    <Compile Include="infrastructure\sorting\ComparableComparer.cs" />
+    <Compile Include="infrastructure\sorting\ComparerBuilder.cs" />
+    <Compile Include="infrastructure\sorting\FixedComparer.cs" />
+    <Compile Include="infrastructure\sorting\OrderedList.cs" />
+    <Compile Include="infrastructure\sorting\PropertyComparer.cs" />
+    <Compile Include="infrastructure\sorting\ReverseComparer.cs" />
     <Compile Include="infrastructure\sorting\Sort.cs" />
-    <Compile Include="infrastructure\sorting\SortingExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
