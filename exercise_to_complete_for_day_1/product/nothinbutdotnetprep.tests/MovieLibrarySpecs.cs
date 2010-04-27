@@ -243,14 +243,14 @@ namespace nothinbutdotnetprep.tests
 
             it should_be_able_to_find_all_movies_published_after_a_certain_year = () =>
             {
-                var results = sut.all_movies().all_matching(Where<Movie>.has_a(x => x.rating).greater_than(2004));
+                var results = sut.all_movies().all_matching(Where<Movie>.has_an(x => x.date_published.Year).greater_than(2004));
 
                 results.should_only_contain(the_ring, shrek, theres_something_about_mary);
             };
 
             it should_be_able_to_find_all_movies_published_between_a_certain_range_of_years = () =>
             {
-                var results = sut.all_movies().all_matching(Where<Movie>.has_a(x => x.date_published.Year).between(1982,2003));
+                    var results = sut.all_movies().all_matching(Where<Movie>.has_an(x => x.date_published.Year).between(1982,2003));
 
                 results.should_only_contain(indiana_jones_and_the_temple_of_doom, a_bugs_life, pirates_of_the_carribean);
             };
@@ -282,7 +282,9 @@ namespace nothinbutdotnetprep.tests
 
             it should_be_able_to_sort_all_movies_by_title_descending = () =>
             {
-                var results = sut.sort_all_movies_by_title_descending();
+                var comparer = Sort<Movie>.by_descending(x => x.title);
+
+                var results = sut.all_movies().sorted_using(comparer);
 
                 results.should_only_contain_in_order(theres_something_about_mary, the_ring, shrek, pirates_of_the_carribean,
                                                      indiana_jones_and_the_temple_of_doom,
@@ -291,6 +293,7 @@ namespace nothinbutdotnetprep.tests
 
             it should_be_able_to_sort_all_movies_by_title_ascending = () =>
             {
+                var comparer = Sort<Movie>.by(x => x.title);
                 var results = sut.sort_all_movies_by_title_ascending();
 
                 results.should_only_contain_in_order(a_bugs_life, cars, indiana_jones_and_the_temple_of_doom, pirates_of_the_carribean, shrek, the_ring,
@@ -299,7 +302,9 @@ namespace nothinbutdotnetprep.tests
 
             it should_be_able_to_sort_all_movies_by_date_published_descending = () =>
             {
-                var results = sut.sort_all_movies_by_date_published_descending();
+                var comparer = Sort<Movie>.by_descending(x => x.date_published);
+
+                var results = sut.all_movies().sorted_using(comparer);
 
                 results.should_only_contain_in_order(theres_something_about_mary, shrek, the_ring, cars, pirates_of_the_carribean, a_bugs_life,
                                                      indiana_jones_and_the_temple_of_doom);
@@ -307,7 +312,9 @@ namespace nothinbutdotnetprep.tests
 
             it should_be_able_to_sort_all_movies_by_date_published_ascending = () =>
             {
-                var results = sut.sort_all_movies_by_date_published_ascending();
+                var comparer = Sort<Movie>.by(x => x.date_published);
+
+                var results = sut.all_movies().sorted_using(comparer);
 
                 results.should_only_contain_in_order(indiana_jones_and_the_temple_of_doom, a_bugs_life, pirates_of_the_carribean, cars, the_ring, shrek,
                                                      theres_something_about_mary);
@@ -321,7 +328,15 @@ namespace nothinbutdotnetprep.tests
                 //Dreamworks
                 //Universal
                 //Disney
-                var results = sut.sort_all_movies_by_movie_studio_and_year_published();
+                var comparer = Sort<Movie>.by(x => x.production_studio,ProductionStudio.MGM,
+                    ProductionStudio.Pixar,
+                    ProductionStudio.Dreamworks,
+                    ProductionStudio.Universal,
+                    ProductionStudio.Disney,
+                    ProductionStudio.Paramount
+                    ).then_by(x => x.date_published.Year);
+
+                var results = sut.all_movies().sorted_using(comparer);
                 /* should return a set of results 
                  * in the collection sorted by the rating of the production studio (not the movie rating) and year published. for this exercise you need to take the studio ratings
                  * into effect, which means that you first have to sort by movie studio (taking the ranking into account) and then by the

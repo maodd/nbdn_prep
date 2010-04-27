@@ -1,4 +1,5 @@
 ﻿using System;
+using nothinbutdotnetprep.collections;
 using nothinbutdotnetprep.infrastructure.ranges;
 
 namespace nothinbutdotnetprep.infrastructure.searching
@@ -32,5 +33,10 @@ namespace nothinbutdotnetprep.infrastructure.searching
                                                                         new InclusiveRange<PropertyType>(start, end)));
         }
 
+        public Criteria<ItemToSearch> greater_than(PropertyType value)
+        {
+            return new PropertyCriteria<ItemToSearch, PropertyType>(accessor,
+                                                                    new GreaterThanCriteria<PropertyType>(value));
+        }
     }
 }
