@@ -1,0 +1,9 @@
+Design Principles
+
+-Single Reponsibility Principle
+-Code to contracts not implementations
+-DRY (Don't repeat yourself)
+-Tell don't ask
+-Encapsulate what varies
+-Open Closed Principle
+-Favour composition over inheritance

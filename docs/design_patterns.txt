@@ -1,0 +1,3 @@
+Design Patterns
+
+-Specification - determine whether an object meets a certain criteria
