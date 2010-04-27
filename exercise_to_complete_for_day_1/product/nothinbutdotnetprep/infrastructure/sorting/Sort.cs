@@ -18,7 +18,9 @@ namespace nothinbutdotnetprep.infrastructure.sorting
 
         public static ComparerBuilder<ItemToSort> by_descending<PropertyToSortOn>(Func<ItemToSort, PropertyToSortOn> accessor) where PropertyToSortOn : IComparable<PropertyToSortOn>
         {
-            return new ComparerBuilder<ItemToSort>(new ReverseComparer<ItemToSort>(new ComparableComparer<ItemToSort, PropertyToSortOn>(accessor)));
+        	return new ComparerBuilder<ItemToSort>(new ReverseComparer<ItemToSort>(
+        	                                       	new PropertyComparer<ItemToSort, PropertyToSortOn>(
+        	                                       		new ComparableComparer<PropertyToSortOn>(), accessor)));
         }
     }
 }
