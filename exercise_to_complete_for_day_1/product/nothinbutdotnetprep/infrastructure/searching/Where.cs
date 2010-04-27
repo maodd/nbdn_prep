@@ -8,5 +8,6 @@ namespace nothinbutdotnetprep.infrastructure.searching
         {
             return accessor;
         }
+
     }
 }

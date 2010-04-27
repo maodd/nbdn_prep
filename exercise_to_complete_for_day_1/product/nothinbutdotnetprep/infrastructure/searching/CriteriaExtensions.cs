@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace nothinbutdotnetprep.infrastructure.searching
 {
@@ -14,22 +15,6 @@ namespace nothinbutdotnetprep.infrastructure.searching
             return new AndCriteria<T>(left_side, right_side);
         }
 
-        public static Criteria<T> equal_to<T, PropertyType>(this Func<T, PropertyType> accessor,
-                                                          PropertyType value_to_match)
-        {
-            return new AnonymousCriteria<T>(t => accessor(t).Equals(value_to_match)); 
-        }
 
-        public static Criteria<T> equal_to_any<T, PropertyType>(this Func<T, PropertyType> accessor,
-                                                  PropertyType value_to_match_1, PropertyType value_to_match_2)
-        {
-            return new AnonymousCriteria<T>(t => accessor(t).Equals(value_to_match_1) || accessor(t).Equals(value_to_match_2));
-        }
-
-        public static Criteria<T> not_equal_to<T, PropertyType>(this Func<T, PropertyType> accessor,
-                                                PropertyType value_to_match)
-        {
-            return new AnonymousCriteria<T>(t => !accessor(t).Equals(value_to_match));
-        }
     }
 }

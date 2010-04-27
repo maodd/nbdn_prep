@@ -238,15 +238,14 @@ namespace nothinbutdotnetprep.tests
 
             it should_be_able_to_find_all_movies_published_after_a_certain_year = () =>
             {
-                var results = sut.all_movies().all_matching(new AnonymousCriteria<Movie>(movie => movie.date_published.Year > 2004));
+                var results = sut.all_movies().all_matching(Where<Movie>.has_a(x => x.rating).greater_than(2004));
 
                 results.should_only_contain(the_ring, shrek, theres_something_about_mary);
             };
 
             it should_be_able_to_find_all_movies_published_between_a_certain_range_of_years = () =>
             {
-                var results = sut.all_movies().all_matching(new AnonymousCriteria<Movie>(movie => movie.date_published.Year >= 1982 &&
-                    movie.date_published.Year <=2003));
+                var results = sut.all_movies().all_matching(Where<Movie>.has_a(x => x.date_published.Year).between(1982,2003));
 
                 results.should_only_contain(indiana_jones_and_the_temple_of_doom, a_bugs_life, pirates_of_the_carribean);
             };
