@@ -3,6 +3,7 @@ using System;
 using developwithpassion.bdd.contexts;
 using developwithpassion.bdd.harnesses.mbunit;
 using developwithpassion.bdddoc.core;
+using nothinbutdotnetprep.infrastructure.events;
 
 namespace nothinbutdotnetprep.tests
 {
@@ -20,7 +21,7 @@ namespace nothinbutdotnetprep.tests
             {
                 inner_exception = new NotImplementedException();
 
-                Action do_something = delegate
+                do_something = delegate
                 {
                     throw inner_exception;
                 };
@@ -41,6 +42,7 @@ namespace nothinbutdotnetprep.tests
 
             static Exception result;
             static Exception inner_exception;
+        	static Action do_something;
         }
     }
 }
