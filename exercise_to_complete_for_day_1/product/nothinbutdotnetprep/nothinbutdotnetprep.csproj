@@ -63,6 +63,11 @@
     <Compile Include="infrastructure\searching\OrCriteria.cs" />
     <Compile Include="infrastructure\searching\PropertyCriteria.cs" />
     <Compile Include="infrastructure\searching\Where.cs" />
+    <Compile Include="infrastructure\sorting\AscendingSortFactory.cs" />
+    <Compile Include="infrastructure\sorting\DefinedOrderSortFactory.cs" />
+    <Compile Include="infrastructure\sorting\DescendingSortFactory.cs" />
+    <Compile Include="infrastructure\sorting\Sort.cs" />
+    <Compile Include="infrastructure\sorting\SortingExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
