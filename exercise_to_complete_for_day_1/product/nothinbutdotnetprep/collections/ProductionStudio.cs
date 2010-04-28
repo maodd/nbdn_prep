@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace nothinbutdotnetprep.collections
 {
     public class ProductionStudio
@@ -8,5 +10,6 @@ namespace nothinbutdotnetprep.collections
         public static readonly ProductionStudio Pixar = new ProductionStudio();
         public static readonly ProductionStudio Disney = new ProductionStudio();
         public static readonly ProductionStudio Dreamworks = new ProductionStudio();
+
     }
 }

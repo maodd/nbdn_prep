@@ -46,7 +46,7 @@ namespace nothinbutdotnetprep.collections
             {
                 if (x.production_studio.Equals(y.production_studio))
                     return x.date_published.Year.CompareTo(y.date_published.Year);
-                return x.production_studio.ToString().CompareTo(y.production_studio.ToString());
+                return StudioRanking.Ranking[x.production_studio].CompareTo(StudioRanking.Ranking[y.production_studio]);
             }
         }
 
