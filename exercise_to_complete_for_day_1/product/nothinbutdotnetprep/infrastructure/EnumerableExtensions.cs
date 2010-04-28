@@ -39,19 +39,20 @@ namespace nothinbutdotnetprep.infrastructure
             return sorted;
         }
 
-		public static IEnumerable<ItemToSort> order_by<ItemToSort, PropertyToSortOn>(this IEnumerable<ItemToSort> items, Func<ItemToSort, PropertyToSortOn> accessor) where PropertyToSortOn : IComparable<PropertyToSortOn>
+		public static OrderedEnumerable<ItemToSort> order_by<ItemToSort, PropertyToSortOn>(this IEnumerable<ItemToSort> items, Func<ItemToSort, PropertyToSortOn> accessor) where PropertyToSortOn : IComparable<PropertyToSortOn>
 		{
-			return new OrderedList<ItemToSort>(items, Sort<ItemToSort>.by(accessor));
+			return new OrderedEnumerable<ItemToSort>(items, Sort<ItemToSort>.by(accessor));
+		}
+        
+		public static OrderedEnumerable<ItemToSort> order_by_descending<ItemToSort, PropertyToSortOn>(this IEnumerable<ItemToSort> items, Func<ItemToSort, PropertyToSortOn> accessor) where PropertyToSortOn : IComparable<PropertyToSortOn>
+		{
+			return new OrderedEnumerable<ItemToSort>(items, Sort<ItemToSort>.by_descending(accessor));
 		}
 
-		public static IEnumerable<ItemToSort> order_by<ItemToSort, PropertyToSortOn>(this IEnumerable<ItemToSort> items, Func<ItemToSort, PropertyToSortOn> accessor, params PropertyToSortOn[] order)
+		public static OrderedEnumerable<ItemToSort> order_by<ItemToSort, PropertyToSortOn>(this IEnumerable<ItemToSort> items, Func<ItemToSort, PropertyToSortOn> accessor, params PropertyToSortOn[] order)
 		{
-			return new OrderedList<ItemToSort>(items, Sort<ItemToSort>.by(accessor, order));
+			return new OrderedEnumerable<ItemToSort>(items, Sort<ItemToSort>.by(accessor, order));
 		}
 
-		public static IEnumerable<ItemToSort> then_by<ItemToSort, PropertyToSortOn>(this IEnumerable<ItemToSort> items, Func<ItemToSort, PropertyToSortOn> accessor) where PropertyToSortOn : IComparable<PropertyToSortOn>
-		{
-			return order_by(items, accessor);
-		}
     }
 }

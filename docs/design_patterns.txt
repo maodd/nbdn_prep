@@ -1,3 +1,8 @@
 Design Patterns
 
 -Specification - determine whether an object meets a certain criteria
+-Factory
+-Adapter
+-Decorator
+-Strategy
+-Builder
